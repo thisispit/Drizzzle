@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
+    <title>Drizzzle - Weather App</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
         <div class="header">
-            <h1 class="app-title">Weather</h1>
+            <h1 class="app-title">Drizzzle</h1>
             <div class="current-time" id="current-time">12:00</div>
         </div>
         
@@ -31,5 +31,28 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCoFGA9WM7AFxqSvJD0ZOX31gMmRdftaYc",
+        authDomain: "drizzzlerain.firebaseapp.com",
+        projectId: "drizzzlerain",
+        storageBucket: "drizzzlerain.firebasestorage.app",
+        messagingSenderId: "142280760933",
+        appId: "1:142280760933:web:5267a27526fb98594e708c",
+        measurementId: "G-QJ4Z3B48W7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
 </body>
 </html>

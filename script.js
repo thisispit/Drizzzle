@@ -189,11 +189,12 @@ function createRain() {
     const rainContainer = document.createElement('div');
     rainContainer.className = 'rain-animation';
     
-    for (let i = 0; i < 50; i++) {
+    // Reduced number for better performance
+    for (let i = 0; i < 30; i++) {
         const drop = document.createElement('div');
         drop.className = 'rain-drop';
         drop.style.left = Math.random() * 100 + '%';
-        drop.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+        drop.style.animationDuration = (Math.random() * 1 + 0.8) + 's';
         drop.style.animationDelay = Math.random() * 2 + 's';
         rainContainer.appendChild(drop);
     }
@@ -202,13 +203,15 @@ function createRain() {
 }
 
 function createClouds(count) {
-    for (let i = 0; i < count; i++) {
+    // Limit maximum clouds for performance
+    const maxClouds = Math.min(count, 4);
+    for (let i = 0; i < maxClouds; i++) {
         const cloud = document.createElement('div');
         cloud.className = 'cloud';
         cloud.style.top = Math.random() * 50 + '%';
-        cloud.style.width = (Math.random() * 100 + 50) + 'px';
-        cloud.style.height = (Math.random() * 40 + 30) + 'px';
-        cloud.style.animationDuration = (Math.random() * 20 + 15) + 's';
+        cloud.style.width = (Math.random() * 80 + 40) + 'px';
+        cloud.style.height = (Math.random() * 30 + 20) + 'px';
+        cloud.style.animationDuration = (Math.random() * 25 + 20) + 's';
         cloud.style.animationDelay = Math.random() * 5 + 's';
         document.body.appendChild(cloud);
     }
@@ -218,14 +221,15 @@ function createSnow() {
     const snowContainer = document.createElement('div');
     snowContainer.className = 'snow-animation';
     
-    for (let i = 0; i < 30; i++) {
+    // Reduced number for better performance
+    for (let i = 0; i < 20; i++) {
         const flake = document.createElement('div');
         flake.className = 'snow-flake';
         flake.innerHTML = '❄';
         flake.style.left = Math.random() * 100 + '%';
-        flake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        flake.style.animationDuration = (Math.random() * 4 + 3) + 's';
         flake.style.animationDelay = Math.random() * 2 + 's';
-        flake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+        flake.style.fontSize = (Math.random() * 8 + 10) + 'px';
         snowContainer.appendChild(flake);
     }
     

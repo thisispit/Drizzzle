@@ -4,6 +4,19 @@
     box-sizing: border-box;
 }
 
+/* Performance optimization */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optimize repaints and reflows */
+*,
+*::before,
+*::after {
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
 body {
     font-family: 'JetBrains Mono', monospace;
     background: linear-gradient(135deg, #1e1e1e 0%, #000000 100%);
@@ -17,6 +30,10 @@ body {
     overflow-y: auto;
     position: relative;
     transition: background 1s ease;
+    will-change: background;
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Weather-based background gradients */
@@ -115,23 +132,41 @@ body.foggy {
 }
 
 @keyframes rainFall {
-    0% { top: -50px; }
-    100% { top: 100vh; }
+    0% { 
+        transform: translate3d(0, -50px, 0); 
+    }
+    100% { 
+        transform: translate3d(0, calc(100vh + 50px), 0); 
+    }
 }
 
 @keyframes cloudMove {
-    0% { transform: translateX(-100px); }
-    100% { transform: translateX(calc(100vw + 100px)); }
+    0% { 
+        transform: translate3d(-100px, 0, 0); 
+    }
+    100% { 
+        transform: translate3d(calc(100vw + 100px), 0, 0); 
+    }
 }
 
 @keyframes snowFall {
     0% { 
-        top: -50px; 
-        transform: rotate(0deg);
+        transform: translate3d(0, -50px, 0) rotate(0deg);
     }
     100% { 
-        top: 100vh; 
-        transform: rotate(360deg);
+        transform: translate3d(0, calc(100vh + 50px), 0) rotate(360deg);
+    }
+}
+
+/* Page load animation */
+@keyframes pageLoad {
+    0% { 
+        opacity: 0;
+        transform: translateY(20px) translateZ(0);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
     }
 }
 
@@ -150,6 +185,10 @@ body.foggy {
     z-index: 2;
     border: 1px solid rgba(255, 255, 255, 0.1);
     margin: 10px;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    animation: subtleGlow 6s ease-in-out infinite, pageLoad 0.8s ease-out;
 }
 
 /* Responsive design for desktop */
@@ -229,12 +268,18 @@ body.foggy {
     font-size: 22px;
     font-weight: 700;
     color: #ffffff;
+    animation: textShimmer 4s ease-in-out infinite;
+    will-change: text-shadow;
+    transform: translateZ(0);
 }
 
 .current-time {
     font-size: 15px;
     font-weight: 300;
     color: #666;
+    animation: gentleFloat 3s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 @media (min-width: 768px) {
@@ -253,11 +298,15 @@ body.foggy {
     border-radius: 25px;
     padding: 5px;
     border: 1px solid #333;
-    transition: border-color 0.3s ease;
+    transition: all 0.2s ease;
+    will-change: border-color, transform;
+    transform: translateZ(0);
 }
 
 .search-container:focus-within {
     border-color: #555;
+    transform: translateZ(0) translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 #city {
@@ -270,10 +319,22 @@ body.foggy {
     outline: none;
     padding: 14px 18px;
     border-radius: 20px;
+    transition: all 0.2s ease;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+#city:focus {
+    transform: translateZ(0) scale(1.02);
 }
 
 #city::placeholder {
     color: #666;
+    transition: color 0.2s ease;
+}
+
+#city:focus::placeholder {
+    color: #888;
 }
 
 .search-btn {
@@ -284,14 +345,21 @@ body.foggy {
     cursor: pointer;
     padding: 14px 18px;
     border-radius: 20px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-weight: 700;
     min-width: 48px;
+    will-change: transform, background-color;
+    transform: translateZ(0);
 }
 
 .search-btn:hover {
     background: #e0e0e0;
-    transform: translateX(2px);
+    transform: translateZ(0) scale(1.05);
+}
+
+.search-btn:active {
+    transform: translateZ(0) scale(0.95);
+    transition: all 0.1s ease;
 }
 
 @media (min-width: 768px) {
@@ -318,6 +386,9 @@ body.foggy {
 .weather-icon {
     font-size: 55px;
     margin-bottom: 12px;
+    animation: gentleFloat 4s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 @media (min-width: 768px) {
@@ -398,6 +469,15 @@ body.foggy {
     backdrop-filter: blur(10px);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+}
+
+.outfit-display:hover {
+    transform: translateZ(0) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .outfit-main {
@@ -491,58 +571,139 @@ body.foggy {
 .snowy { color: #F0F8FF; }
 .foggy { color: #708090; }
 
-/* Animations */
+/* Animations - Optimized for performance */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { 
+        opacity: 0; 
+        transform: translateZ(0);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateZ(0);
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateX(-20px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from { 
+        transform: translate3d(-20px, 0, 0); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translate3d(0, 0, 0); 
+        opacity: 1; 
+    }
 }
 
 @keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from { 
+        transform: translate3d(0, 20px, 0); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translate3d(0, 0, 0); 
+        opacity: 1; 
+    }
 }
 
 @keyframes bounceIn {
-    0% { transform: scale(0.3); opacity: 0; }
-    50% { transform: scale(1.05); }
-    70% { transform: scale(0.9); }
-    100% { transform: scale(1); opacity: 1; }
+    0% { 
+        transform: scale3d(0.3, 0.3, 1); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: scale3d(1.05, 1.05, 1); 
+    }
+    70% { 
+        transform: scale3d(0.9, 0.9, 1); 
+    }
+    100% { 
+        transform: scale3d(1, 1, 1); 
+        opacity: 1; 
+    }
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% { 
+        transform: scale3d(1, 1, 1); 
+    }
+    50% { 
+        transform: scale3d(1.05, 1.05, 1); 
+    }
+    100% { 
+        transform: scale3d(1, 1, 1); 
+    }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% { 
+        transform: rotate(0deg) translateZ(0); 
+    }
+    100% { 
+        transform: rotate(360deg) translateZ(0); 
+    }
+}
+
+/* Add subtle glow animation */
+@keyframes subtleGlow {
+    0%, 100% { 
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Gentle floating animation */
+@keyframes gentleFloat {
+    0%, 100% { 
+        transform: translateY(0px) translateZ(0);
+    }
+    50% { 
+        transform: translateY(-3px) translateZ(0);
+    }
+}
+
+/* Subtle text shimmer */
+@keyframes textShimmer {
+    0% { 
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    100% { 
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
 }
 
 .fade-in {
     animation: fadeIn 0.6s ease-out;
+    will-change: opacity, transform;
+    transform: translateZ(0);
 }
 
 .slide-in {
     animation: slideIn 0.8s ease-out;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .slide-up {
     animation: slideUp 0.6s ease-out 0.3s both;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .bounce-in {
     animation: bounceIn 0.8s ease-out;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .pulse {
     animation: pulse 2s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 /* Loading spinner */
@@ -563,6 +724,8 @@ body.foggy {
     animation: spin 1s linear infinite;
     position: relative;
     display: block;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .loading-spinner::after {
@@ -575,8 +738,9 @@ body.foggy {
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-top: 2px solid rgba(255, 255, 255, 0.6);
     border-radius: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translateZ(0);
     animation: spin 0.8s linear infinite reverse;
+    will-change: transform;
 }
 
 /* Fallback for browsers that don't support ::after */
@@ -593,6 +757,8 @@ body.foggy {
     animation: pulse 1.5s ease-in-out infinite;
     margin: 0;
     text-align: center;
+    will-change: opacity;
+    transform: translateZ(0);
 }
 
 /* Weather details */
@@ -613,6 +779,16 @@ body.foggy {
     align-items: center;
     gap: 4px;
     flex: 1;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    padding: 5px;
+    will-change: transform, background-color;
+    transform: translateZ(0);
+}
+
+.detail-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transform: translateZ(0) translateY(-2px);
 }
 
 .detail-icon {
@@ -751,5 +927,27 @@ body.foggy {
     
     .outfit-section {
         margin-bottom: 10px;
+    }
+}
+
+/* Reduce motion for accessibility and performance */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .rain-animation,
+    .cloud,
+    .snow-animation {
+        display: none !important;
+    }
+    
+    .app-container {
+        animation: pageLoad 0.3s ease-out !important;
     }
 }
