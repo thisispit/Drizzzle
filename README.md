@@ -2,7 +2,11 @@
 
 A beautiful, responsive weather application with real-time data and intelligent outfit recommendations. Built with vanilla JavaScript, featuring smooth animations and dynamic weather-based backgrounds.
 
-![Drizzzle Weather App](media/demo.gif)
+![Drizzzle Weather App](media/demo.png)
+
+## 🌐 Live Demo
+**[🚀 View Live App](https://drizzzlerain.web.app/)**
+
 
 ## ✨ Features
 
@@ -238,4 +242,4 @@ If you encounter any issues or have questions:
 
 **Made with ❤️ by [thisispit](https://github.com/thisispit)**
 
-[⭐ Star this repo](https://github.com/thisispit/Drizzzle) | [🐛 Report Bug](https://github.com/thisispit/Drizzzle/issues) | [💡 Request Feature](https://github.com/thisispit/Drizzzle/issues)
+[🚀 **Live App**](https://drizzzlerain.web.app/) | [⭐ Star this repo](https://github.com/thisispit/Drizzzle) | [🐛 Report Bug](https://github.com/thisispit/Drizzzle/issues) | [💡 Request Feature](https://github.com/thisispit/Drizzzle/issues)
