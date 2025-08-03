@@ -19,7 +19,8 @@ html {
 
 body {
     font-family: 'JetBrains Mono', monospace;
-    background: linear-gradient(135deg, #1e1e1e 0%, #000000 100%);
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+    background-size: 400% 400%;
     color: #ffffff;
     min-height: 100vh;
     display: flex;
@@ -29,66 +30,79 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
-    transition: background 1s ease;
+    transition: all 2s ease;
     will-change: background;
     transform: translateZ(0);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    animation: gradientShift 20s ease infinite;
 }
 
-/* Weather-based background gradients */
+/* Enhanced weather-based background gradients with subtle colors */
 body.sunny {
-    background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 50%, #f7931e 100%);
+    background: linear-gradient(135deg, #f7dc6f 0%, #f39c12 30%, #e67e22 100%);
+    background-size: 400% 400%;
+    animation: sunnyGradient 15s ease infinite;
 }
 
 body.cloudy {
-    background: linear-gradient(135deg, #4b79a1 0%, #283e51 100%);
+    background: linear-gradient(135deg, #85929e 0%, #5d6d7e 50%, #34495e 100%);
+    background-size: 400% 400%;
+    animation: cloudyGradient 18s ease infinite;
 }
 
 body.rainy {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+    background: linear-gradient(135deg, #5dade2 0%, #3498db 50%, #2e86ab 100%);
+    background-size: 400% 400%;
+    animation: rainyGradient 12s ease infinite;
 }
 
 body.stormy {
-    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+    background: linear-gradient(135deg, #566573 0%, #34495e 50%, #2c3e50 100%);
+    background-size: 400% 400%;
+    animation: stormyGradient 8s ease infinite;
 }
 
 body.snowy {
-    background: linear-gradient(135deg, #e6ddd4 0%, #d5d4d0 100%);
-    color: #333;
+    background: linear-gradient(135deg, #ecf0f1 0%, #d5dbdb 50%, #bdc3c7 100%);
+    background-size: 400% 400%;
+    color: #2c3e50;
+    animation: snowyGradient 20s ease infinite;
 }
 
 body.snowy .app-container {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #333;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #2c3e50;
 }
 
 body.snowy .app-title,
 body.snowy .temperature,
 body.snowy .location,
 body.snowy .detail-value {
-    color: #333;
+    color: #2c3e50;
 }
 
 body.snowy .current-time,
 body.snowy .description,
 body.snowy .detail-label {
-    color: #666;
+    color: #566573;
 }
 
 body.snowy #city {
-    color: #333;
+    color: #2c3e50;
 }
 
 body.snowy #city::placeholder {
-    color: #999;
+    color: #85929e;
 }
 
 body.foggy {
-    background: linear-gradient(135deg, #606c88 0%, #3f4c6b 100%);
+    background: linear-gradient(135deg, #85929e 0%, #5d6d7e 50%, #566573 100%);
+    background-size: 400% 400%;
+    animation: foggyGradient 25s ease infinite;
 }
 
-/* Background animations - Optimized for performance */
+/* Enhanced Background animations - Optimized for performance */
 .rain-animation {
     position: fixed;
     top: 0;
@@ -99,36 +113,88 @@ body.foggy {
     z-index: 1;
     will-change: transform;
     transform: translateZ(0);
+    opacity: 0.7;
 }
 
 .rain-drop {
     position: absolute;
-    background: rgba(173, 216, 230, 0.6);
+    background: linear-gradient(to bottom, rgba(173, 216, 230, 0.9), rgba(173, 216, 230, 0.3));
     width: 2px;
     height: 20px;
-    border-radius: 1px;
+    border-radius: 0 0 2px 2px;
     animation: rainFall linear infinite;
     will-change: transform;
     transform: translateZ(0);
+    box-shadow: 0 0 2px rgba(173, 216, 230, 0.5);
 }
 
 .cloud {
     position: fixed;
-    background: rgba(255, 255, 255, 0.1);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08));
     border-radius: 50px;
     opacity: 0.6;
-    animation: cloudMove 20s linear infinite;
+    animation: cloudMove linear infinite;
     will-change: transform;
     transform: translateZ(0);
+    filter: blur(1px);
 }
 
 .snow-flake {
     position: absolute;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.95);
     font-size: 14px;
     animation: snowFall linear infinite;
     will-change: transform;
     transform: translateZ(0);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+/* Enhanced floating particles for sunny weather */
+.sun-particle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.9), rgba(255, 165, 0, 0.3));
+    border-radius: 50%;
+    animation: sunParticle linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    opacity: 0.8;
+    box-shadow: 0 0 3px rgba(255, 215, 0, 0.6);
+}
+
+/* Enhanced lightning effect for stormy weather */
+.lightning-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: lightning 4s infinite;
+}
+
+/* Fog effect for misty weather */
+.fog-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 25%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(255, 255, 255, 0.05) 75%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    background-size: 200% 200%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    animation: fogMove 15s ease infinite;
 }
 
 @keyframes rainFall {
@@ -156,6 +222,37 @@ body.foggy {
     100% { 
         transform: translate3d(0, calc(100vh + 50px), 0) rotate(360deg);
     }
+}
+
+@keyframes sunParticle {
+    0% { 
+        transform: translate3d(0, 100vh, 0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translate3d(0, 90vh, 0) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translate3d(0, -10vh, 0) scale(1);
+    }
+    100% { 
+        transform: translate3d(0, -50px, 0) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes lightning {
+    0%, 90%, 100% { opacity: 0; }
+    91%, 94% { opacity: 0.8; }
+    92%, 93% { opacity: 0.2; }
+}
+
+@keyframes fogMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Page load animation */
@@ -439,7 +536,7 @@ body.foggy {
 }
 
 .outfit-section {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     flex-shrink: 0;
 }
 
@@ -501,28 +598,28 @@ body.foggy {
 }
 
 .outfit-title {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #fff;
     margin-bottom: 4px;
 }
 
 .outfit-details {
-    font-size: 10px;
+    font-size: 11px;
     color: #ccc;
     margin-bottom: 6px;
     line-height: 1.3;
 }
 
 .outfit-accessories {
-    font-size: 9px;
+    font-size: 10px;
     color: #aaa;
     margin-bottom: 4px;
     line-height: 1.3;
 }
 
 .outfit-colors {
-    font-size: 9px;
+    font-size: 10px;
     color: #999;
     line-height: 1.3;
 }
@@ -674,6 +771,66 @@ body.foggy {
     100% { 
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
     }
+}
+
+/* Gradient Background Animations */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes sunnyGradient {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 0%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes cloudyGradient {
+    0% { background-position: 0% 50%; }
+    33% { background-position: 100% 0%; }
+    66% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes rainyGradient {
+    0% { background-position: 0% 50%; }
+    20% { background-position: 100% 0%; }
+    40% { background-position: 100% 100%; }
+    60% { background-position: 0% 100%; }
+    80% { background-position: 0% 0%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes stormyGradient {
+    0% { background-position: 0% 50%; }
+    12.5% { background-position: 100% 0%; }
+    25% { background-position: 100% 100%; }
+    37.5% { background-position: 0% 100%; }
+    50% { background-position: 0% 0%; }
+    62.5% { background-position: 100% 50%; }
+    75% { background-position: 50% 100%; }
+    87.5% { background-position: 50% 0%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes snowyGradient {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 25%; }
+    50% { background-position: 100% 75%; }
+    75% { background-position: 0% 75%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes foggyGradient {
+    0% { background-position: 0% 50%; }
+    20% { background-position: 80% 20%; }
+    40% { background-position: 100% 80%; }
+    60% { background-position: 20% 100%; }
+    80% { background-position: 0% 20%; }
+    100% { background-position: 0% 50%; }
 }
 
 .fade-in {
@@ -875,7 +1032,7 @@ body.foggy {
     }
     
     .app-container {
-        padding: 15px;
+        padding: 12px;
         min-height: 95vh;
         border-radius: 15px;
         margin: 5px;
@@ -883,50 +1040,119 @@ body.foggy {
     }
     
     .header {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
     
     .search-container {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
     
     .weather-main {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
     
     .temperature {
-        font-size: 50px;
+        font-size: 48px;
     }
     
     .weather-icon {
-        font-size: 50px;
-        margin-bottom: 10px;
+        font-size: 48px;
+        margin-bottom: 8px;
+    }
+    
+    .outfit-section {
+        margin-bottom: 15px;
+    }
+    
+    .section-title {
+        font-size: 11px;
+        margin-bottom: 12px;
+        letter-spacing: 1.5px;
     }
     
     .outfit-display {
         flex-direction: column;
         text-align: center;
-        gap: 10px;
-        padding: 12px;
+        gap: 15px;
+        padding: 16px;
+        border-radius: 15px;
     }
     
     .outfit-main {
         flex-direction: column;
         align-items: center;
-        gap: 10px;
-    }
-    
-    .outfit-text {
-        text-align: center;
+        gap: 12px;
+        width: 100%;
     }
     
     .outfit-icons {
         justify-content: center;
-        font-size: 24px;
+        font-size: 28px;
+        gap: 8px;
+        margin-bottom: 5px;
     }
     
-    .outfit-section {
-        margin-bottom: 10px;
+    .outfit-text {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .outfit-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #fff;
+    }
+    
+    .outfit-details {
+        font-size: 12px;
+        margin-bottom: 8px;
+        line-height: 1.4;
+        color: #ccc;
+    }
+    
+    .outfit-accessories {
+        font-size: 11px;
+        margin-bottom: 6px;
+        line-height: 1.4;
+        color: #aaa;
+    }
+    
+    .outfit-colors {
+        font-size: 11px;
+        line-height: 1.4;
+        color: #999;
+    }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 360px) {
+    .app-container {
+        padding: 10px;
+        margin: 2px;
+    }
+    
+    .outfit-display {
+        padding: 14px;
+        gap: 12px;
+    }
+    
+    .outfit-icons {
+        font-size: 24px;
+        gap: 6px;
+    }
+    
+    .outfit-title {
+        font-size: 13px;
+    }
+    
+    .outfit-details {
+        font-size: 11px;
+    }
+    
+    .outfit-accessories,
+    .outfit-colors {
+        font-size: 10px;
     }
 }
 

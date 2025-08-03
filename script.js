@@ -149,13 +149,14 @@ function changeBackground(weather) {
     body.className = body.className.replace(/\b(sunny|cloudy|rainy|stormy|snowy|foggy)\b/g, '');
     
     // Remove existing animations
-    const existingAnimations = document.querySelectorAll('.rain-animation, .cloud, .snow-animation');
+    const existingAnimations = document.querySelectorAll('.rain-animation, .cloud, .snow-animation, .sun-particles, .lightning-flash, .fog-layer');
     existingAnimations.forEach(el => el.remove());
     
     // Add weather-specific class and animations
     switch (weather) {
         case 'Clear':
             body.classList.add('sunny');
+            createSunParticles();
             createClouds(2);
             break;
         case 'Clouds':
@@ -171,16 +172,19 @@ function changeBackground(weather) {
         case 'Thunderstorm':
             body.classList.add('stormy');
             createRain();
-            createClouds(5);
+            createClouds(3);
+            createLightning();
             break;
         case 'Snow':
             body.classList.add('snowy');
             createSnow();
+            createClouds(2);
             break;
         case 'Mist':
         case 'Fog':
             body.classList.add('foggy');
-            createClouds(6);
+            createFog();
+            createClouds(5);
             break;
     }
 }
@@ -189,13 +193,25 @@ function createRain() {
     const rainContainer = document.createElement('div');
     rainContainer.className = 'rain-animation';
     
-    // Reduced number for better performance
-    for (let i = 0; i < 30; i++) {
+    // Enhanced rain with better visibility
+    for (let i = 0; i < 50; i++) {
         const drop = document.createElement('div');
         drop.className = 'rain-drop';
         drop.style.left = Math.random() * 100 + '%';
-        drop.style.animationDuration = (Math.random() * 1 + 0.8) + 's';
+        drop.style.animationDuration = (Math.random() * 0.8 + 0.6) + 's';
         drop.style.animationDelay = Math.random() * 2 + 's';
+        
+        // Enhanced drop styling
+        drop.style.cssText += `
+            background: linear-gradient(to bottom, rgba(138, 196, 255, 0.9), rgba(52, 152, 219, 0.6));
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+            width: 3px;
+        `;
+        
+        // Add some variation to drop sizes
+        const height = Math.random() * 15 + 20;
+        drop.style.height = height + 'px';
+        
         rainContainer.appendChild(drop);
     }
     
@@ -221,19 +237,81 @@ function createSnow() {
     const snowContainer = document.createElement('div');
     snowContainer.className = 'snow-animation';
     
-    // Reduced number for better performance
-    for (let i = 0; i < 20; i++) {
+    // Enhanced snow with better visibility
+    for (let i = 0; i < 35; i++) {
         const flake = document.createElement('div');
         flake.className = 'snow-flake';
         flake.innerHTML = '❄';
         flake.style.left = Math.random() * 100 + '%';
         flake.style.animationDuration = (Math.random() * 4 + 3) + 's';
         flake.style.animationDelay = Math.random() * 2 + 's';
-        flake.style.fontSize = (Math.random() * 8 + 10) + 'px';
+        flake.style.fontSize = (Math.random() * 10 + 12) + 'px';
+        
+        // Enhanced styling for better visibility
+        flake.style.cssText += `
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+        `;
+        
         snowContainer.appendChild(flake);
     }
     
     document.body.appendChild(snowContainer);
+}
+
+function createSunParticles() {
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'sun-particles';
+    
+    // Enhanced sun particles with better visibility
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'sun-particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+        particle.style.animationDelay = Math.random() * 3 + 's';
+        
+        // Enhanced styling for better visibility
+        const size = Math.random() * 8 + 6;
+        particle.style.cssText += `
+            width: ${size}px;
+            height: ${size}px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.8), rgba(255, 140, 0, 0.6));
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        `;
+        
+        particleContainer.appendChild(particle);
+    }
+    
+    document.body.appendChild(particleContainer);
+}
+
+function createLightning() {
+    // Enhanced lightning with better timing
+    setInterval(() => {
+        const flash = document.createElement('div');
+        flash.className = 'lightning-flash';
+        flash.style.cssText = `
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+        `;
+        document.body.appendChild(flash);
+        
+        setTimeout(() => flash.remove(), 200);
+    }, 2500 + Math.random() * 4000);
+}
+
+function createFog() {
+    const fogLayer = document.createElement('div');
+    fogLayer.className = 'fog-layer';
+    fogLayer.style.cssText = `
+        background: linear-gradient(45deg, 
+            rgba(200, 200, 200, 0.3), 
+            rgba(150, 150, 150, 0.2), 
+            rgba(180, 180, 180, 0.3));
+        backdrop-filter: blur(2px);
+    `;
+    document.body.appendChild(fogLayer);
 }
 
 function recommendOutfit(weather, temperature) {
