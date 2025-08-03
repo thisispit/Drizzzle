@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🌦️ Drizzzle Weather App
 
 A beautiful, responsive weather application with real-time data and intelligent outfit recommendations. Built with vanilla JavaScript, featuring smooth animations and dynamic weather-based backgrounds.
