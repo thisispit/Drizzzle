@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1 class="app-title">Weather</h1>
+            <div class="current-time" id="current-time">12:00</div>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="city" placeholder="Enter city name">
+            <button id="getWeather" class="search-btn" title="Search weather">🔍</button>
+        </div>
+
+        <div id="weather-result" class="weather-main">
+            <!-- Weather data will be injected here -->
+        </div>
+
+        <div class="outfit-section">
+            <div class="section-title">OUTFIT RECOMMENDATION</div>
+            <div id="outfit" class="outfit-display">
+                <!-- Outfit recommendation will be injected here -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
